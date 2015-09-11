@@ -65,11 +65,21 @@ Weapon.prototype = Object.create(Item.prototype, {
  * @property {number} energy
  */
 
+ function Food(name, energy) {
+  this.energy = energy;
+  Item.call(this, name); // Call super class
+}
+
 
 /**
  * Food Extends Item Class
  * -----------------------------
  */
+Food.prototype = Object.create(Item.prototype, {
+  constructor: {
+    value: Item
+  }
+});
 
 
 
