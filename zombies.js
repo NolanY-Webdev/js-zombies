@@ -65,7 +65,7 @@ Weapon.prototype = Object.create(Item.prototype, {
  * @property {number} energy
  */
 
- function Food(name, energy) {
+function Food(name, energy) {
   this.energy = energy;
   Item.call(this, name); // Call super class
 }
@@ -104,6 +104,17 @@ Food.prototype = Object.create(Item.prototype, {
  * @property {method} getPack              Returns private variable `pack`.
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
+function Player(name, health, strength, speed) {
+  this.name = name;
+  this.health = health;
+  this.strength = strength;
+  this.speed = speed;
+  this._pack
+  this._maxHealth = health;
+  this.equipped = false;
+  this.isAlive = true;
+
+}
 
 
 /**
