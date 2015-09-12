@@ -138,7 +138,7 @@ Player.prototype.checkPack = function() {
   for(var i = 0; i < this.getPack().length; i++) {
     if(i < this.getPack().length - 1) {
       stuff += (this.getPack()[i].name + ' ');
-    } else { stuff += this.getPack[i]}
+    } else { stuff += this.getPack[i];}
   }
   console.log(stuff);
 };
@@ -165,11 +165,13 @@ Player.prototype.takeItem = function(item) {
     this.getPack().push(item);
     console.log('Successfully obtained ' + item.name);
     return true;
+  } else if (this.getPack().length > 3) {
+    console.log('You\'re carrying too much shit already. Don\'t be a hoarder.');
+    return false;
   } else {
-    console.log('You\'re carrying too much shit already. Don\'t be a hoarder');
     return false;
   }
-}
+};
 
 /**
  * Player Class Method => discardItem(item)
@@ -197,6 +199,17 @@ Player.prototype.takeItem = function(item) {
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
 
+Player.prototype.discardItem = function(item) {
+  if (this.getPack().indexOf(item) !== -1) {
+    var space = this.getPack().indexOf(item);
+    console.log('You tossed ' + item.name + '! Hope you don\'t need it later.');
+    this.getPack().splice(space, 1);
+    return true;
+  } else {
+    console.log('You don\'t even own a ' + item + '! Makes it kind of difficult to thow it away');
+    return false;
+  }
+};
 
 /**
  * Player Class Method => equip(itemToEquip)
