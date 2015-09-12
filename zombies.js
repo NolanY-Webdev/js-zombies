@@ -44,8 +44,8 @@ function Weapon(name, damage) {
 
 // EXTEND SUPER CLASS
 Weapon.prototype = Object.create(Item.prototype, {
-  constructor: {
-    value: Item
+  constructor : {
+    value : Item
   }
 });
 
@@ -76,8 +76,8 @@ function Food(name, energy) {
  * -----------------------------
  */
 Food.prototype = Object.create(Item.prototype, {
-  constructor: {
-    value: Item
+  constructor : {
+    value : Item
   }
 });
 
@@ -134,9 +134,9 @@ function Player(name, health, strength, speed) {
  * @name checkPack
  */
 Player.prototype.checkPack = function() {
-  var stuff = "";
-  for(var i = 0; i < this.getPack().length; i++) {
-    if(i < this.getPack().length - 1) {
+  var stuff = '';
+  for (var i = 0; i < this.getPack().length; i++) {
+    if (i < this.getPack().length - 1) {
       stuff += (this.getPack()[i].name + ' ');
     } else { stuff += this.getPack[i];}
   }
@@ -161,7 +161,7 @@ Player.prototype.checkPack = function() {
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
 Player.prototype.takeItem = function(item) {
-  if(this.getPack().length < 3) {
+  if (this.getPack().length < 3) {
     this.getPack().push(item);
     console.log('Successfully obtained ' + item.name);
     return true;
@@ -202,11 +202,11 @@ Player.prototype.takeItem = function(item) {
 Player.prototype.discardItem = function(item) {
   if (this.getPack().indexOf(item) !== -1) {
     var space = this.getPack().indexOf(item);
-    console.log('You tossed ' + item.name + '! Hope you don\'t need it later.');
+    console.log('You tossed yo ' + item.name + '! Hope you don\'t need it later.');
     this.getPack().splice(space, 1);
     return true;
   } else {
-    console.log('You don\'t even own a ' + item + '! Makes it kind of difficult to thow it away');
+    console.log('You don\'t even own a ' + item.name + '! Makes it kind of difficult to thow one away');
     return false;
   }
 };
@@ -230,6 +230,25 @@ Player.prototype.discardItem = function(item) {
  * @name equip
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
+Player.prototype.equip = function(itemToEquip) {
+  if (this.getPack().indexOf(itemToEquip) == -1) {
+    console.log('You equipped ' + itemToEquip.name + '!...but after you stopped hallucinating you notice you don\'t even own a ' + itemToEquip.name + '.');
+    return false;
+  }else if (!(itemToEquip instanceof Weapon)) {
+    console.log('You equipped ' + itemToEquip.name + '..... then realised it wouldn\'t be an effective weapon and put it back.');
+    return false;
+  } else if (itemToEquip instanceof Weapon) {
+    var space = this.getPack().indexOf(itemToEquip);
+    if (this.equipped === false) {
+      this.equipped = itemToEquip;
+    } else {
+      this.getPack().push(this.equipped);
+      this.equipped = itemToEquip;
+    }
+    this.getPack().splice(space, 1);
+    return true;
+  }
+};
 
 
 /**
