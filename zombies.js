@@ -138,7 +138,7 @@ Player.prototype.checkPack = function() {
   for (var i = 0; i < this.getPack().length; i++) {
     if (i < this.getPack().length - 1) {
       stuff += (this.getPack()[i].name + ' ');
-    } else { stuff += this.getPack[i];}
+    } else { stuff += this.getPack[i].name;}
   }
   console.log(stuff);
 };
@@ -269,7 +269,26 @@ Player.prototype.equip = function(itemToEquip) {
  * @name eat
  * @param {Food} itemToEat  The food item to eat.
  */
-
+Player.prototype.eat = function(itemToEat) {
+  if (this.getPack().indexOf(itemToEat) == -1) {
+    console.log('You wished you could eat ' + itemToEat.name + ' and you totally could, had you owned any.');
+    return false;
+  }else if (!(itemToEat instanceof Food)) {
+    console.log('You attempt to eat your ' + itemToEat.name + '. You stop trying, but only after losing a couple teeth. It wasn\'t a very good dietary choice anyway.');
+    return false;
+  } else if (itemToEat instanceof Food) {
+    var space = this.getPack().indexOf(itemToEat);
+    if (this.health + itemToEat.energy > this.getMaxHealth()) {
+      this.health = this._maxHealth;
+      console.log('You eat your ' + itemToEat.name + '. It was delicious and now you feel fat. Perhaps you should ration your food better... or not, you might be dead soon anyways.');
+    } else {
+      this.health += itemToEat.energy;
+      console.log('Om nom nom nom nom, your ' + itemToEat.name + ' never stood a chance. You wonder if this is how the zombies will feel when they\'re munching on your face.');
+    }
+    this.getPack().splice(space, 1);
+    return true;
+  }
+};
 
 /**
  * Player Class Method => useItem(item)
