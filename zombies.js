@@ -133,7 +133,15 @@ function Player(name, health, strength, speed) {
  *
  * @name checkPack
  */
-
+Player.prototype.checkPack = function() {
+  var stuff = "";
+  for(var i = 0; i < this.getPack().length; i++) {
+    if(i < this.getPack().length - 1) {
+      stuff += (this.getPack()[i].name + ' ');
+    } else { stuff += this.getPack[i]}
+  }
+  console.log(stuff);
+};
 
 /**
  * Player Class Method => takeItem(item)
@@ -152,7 +160,16 @@ function Player(name, health, strength, speed) {
  * @param {Item/Weapon/Food} item   The item to take.
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
-
+Player.prototype.takeItem = function(item) {
+  if(this.getPack().length < 3) {
+    this.getPack().push(item);
+    console.log('Successfully obtained ' + item.name);
+    return true;
+  } else {
+    console.log('You\'re carrying too much shit already. Don\'t be a hoarder');
+    return false;
+  }
+}
 
 /**
  * Player Class Method => discardItem(item)
